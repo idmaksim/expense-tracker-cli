@@ -1,6 +1,7 @@
 # 💰 Expense Tracker CLI
 
 A command-line expense tracking application built with Go using clean architecture principles.
+This project was implemented based on the requirements from [roadmap.sh Expense Tracker project](https://roadmap.sh/projects/expense-tracker).
 
 ## ✨ Features
 
