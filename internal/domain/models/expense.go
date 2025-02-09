@@ -3,7 +3,7 @@ package models
 import "time"
 
 type Expense struct {
-	ID          string  `json:"id"`
+	ID          int     `json:"id"`
 	Date        string  `json:"date"`
 	Description string  `json:"description"`
 	Amount      float32 `json:"amount"`

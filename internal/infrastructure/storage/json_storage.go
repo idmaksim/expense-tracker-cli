@@ -24,6 +24,13 @@ func (s *JSONStorage) Init() error {
 	return nil
 }
 
+func (s *JSONStorage) FindAll() ([]*models.Expense, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+
+	return s.readExpenses()
+}
+
 func (s *JSONStorage) Create(expense *models.Expense) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -32,6 +39,15 @@ func (s *JSONStorage) Create(expense *models.Expense) error {
 	if err != nil {
 		return err
 	}
+
+	maxId := 0
+	for _, expense := range expenses {
+		if expense.ID > maxId {
+			maxId = expense.ID
+		}
+	}
+
+	expense.ID = maxId + 1
 
 	expenses = append(expenses, expense)
 
