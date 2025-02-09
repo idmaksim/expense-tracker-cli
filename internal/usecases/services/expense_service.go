@@ -25,6 +25,10 @@ func (s *ExpenseService) CreateExpense(expense *models.Expense) error {
 	return nil
 }
 
+func (s *ExpenseService) UpdateExpense(expense *models.Expense) error {
+	return s.repo.Update(expense)
+}
+
 func (s *ExpenseService) Summary() (float32, error) {
 	total, err := s.repo.Summary()
 	if err != nil {

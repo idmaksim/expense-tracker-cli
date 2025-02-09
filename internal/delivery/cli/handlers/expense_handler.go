@@ -39,6 +39,18 @@ func (handler *ExpenseHandler) ListExpenses() error {
 	return nil
 }
 
+func (handler *ExpenseHandler) UpdateExpense(id int, description string, amount float32) error {
+	expense := models.NewExpense(description, amount)
+	expense.ID = id
+	err := handler.service.UpdateExpense(expense)
+	if err != nil {
+		return fmt.Errorf("failed to update expense: %w", err)
+	}
+
+	fmt.Println("Expense updated successfully")
+	return nil
+}
+
 func (handler *ExpenseHandler) DeleteExpense(id int) error {
 	return handler.service.DeleteExpense(id)
 }

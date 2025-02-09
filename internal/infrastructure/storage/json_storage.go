@@ -68,6 +68,31 @@ func (s *JSONStorage) Summary() (float32, error) {
 	return total, nil
 }
 
+func (s *JSONStorage) Update(expense *models.Expense) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	expenses, err := s.readExpenses()
+	if err != nil {
+		return err
+	}
+
+	updated := false
+
+	for i, e := range expenses {
+		if e.ID == expense.ID {
+			expenses[i] = expense
+			updated = true
+		}
+	}
+
+	if !updated {
+		return fmt.Errorf("expense with id %d not found", expense.ID)
+	}
+
+	return s.writeExpenses(expenses)
+}
+
 func (s *JSONStorage) Create(expense *models.Expense) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
