@@ -31,5 +31,6 @@ func (c *Commands) setup() {
 		c.newAddCmd(),
 		c.newListCmd(),
 		c.newDeleteCmd(),
+		c.newSummaryCmd(),
 	)
 }

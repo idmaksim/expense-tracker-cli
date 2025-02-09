@@ -6,4 +6,5 @@ type ExpenseRepository interface {
 	Create(expense *models.Expense) error
 	FindAll() ([]*models.Expense, error)
 	Delete(id int) error
+	Summary() (float32, error)
 }

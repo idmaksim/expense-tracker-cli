@@ -17,7 +17,21 @@ func NewExpenseService(repo repositories.ExpenseRepository) *ExpenseService {
 }
 
 func (s *ExpenseService) CreateExpense(expense *models.Expense) error {
-	return s.repo.Create(expense)
+	err := s.repo.Create(expense)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (s *ExpenseService) Summary() (float32, error) {
+	total, err := s.repo.Summary()
+	if err != nil {
+		return 0, err
+	}
+
+	return total, nil
 }
 
 func (s *ExpenseService) DeleteExpense(id int) error {

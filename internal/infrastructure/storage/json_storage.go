@@ -37,7 +37,6 @@ func (s *JSONStorage) Delete(id int) error {
 	for i, expense := range expenses {
 		if expense.ID == id {
 			expenses = append(expenses[:i], expenses[i+1:]...)
-			fmt.Println("Expense deleted successfully")
 			return s.writeExpenses(expenses)
 		}
 	}
@@ -50,6 +49,23 @@ func (s *JSONStorage) FindAll() ([]*models.Expense, error) {
 	defer s.mu.RUnlock()
 
 	return s.readExpenses()
+}
+
+func (s *JSONStorage) Summary() (float32, error) {
+	s.mu.RLock()
+	defer s.mu.RUnlock()
+
+	expenses, err := s.readExpenses()
+	if err != nil {
+		return 0, err
+	}
+
+	total := float32(0.0)
+	for _, expense := range expenses {
+		total += expense.Amount
+	}
+
+	return total, nil
 }
 
 func (s *JSONStorage) Create(expense *models.Expense) error {
