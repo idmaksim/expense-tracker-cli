@@ -20,6 +20,10 @@ func (s *ExpenseService) CreateExpense(expense *models.Expense) error {
 	return s.repo.Create(expense)
 }
 
+func (s *ExpenseService) DeleteExpense(id int) error {
+	return s.repo.Delete(id)
+}
+
 func (s *ExpenseService) FindAll() ([]*models.Expense, error) {
 	expenses, err := s.repo.FindAll()
 	if err != nil {

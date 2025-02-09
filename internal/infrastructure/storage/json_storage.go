@@ -2,6 +2,7 @@ package storage
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"sync"
 
@@ -22,6 +23,26 @@ func (s *JSONStorage) Init() error {
 		return s.writeExpenses([]*models.Expense{})
 	}
 	return nil
+}
+
+func (s *JSONStorage) Delete(id int) error {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	expenses, err := s.readExpenses()
+	if err != nil {
+		return err
+	}
+
+	for i, expense := range expenses {
+		if expense.ID == id {
+			expenses = append(expenses[:i], expenses[i+1:]...)
+			fmt.Println("Expense deleted successfully")
+			return s.writeExpenses(expenses)
+		}
+	}
+
+	return fmt.Errorf("expense with id %d not found", id)
 }
 
 func (s *JSONStorage) FindAll() ([]*models.Expense, error) {

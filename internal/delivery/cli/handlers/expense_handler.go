@@ -32,3 +32,7 @@ func (handler *ExpenseHandler) ListExpenses() error {
 	}
 	return nil
 }
+
+func (handler *ExpenseHandler) DeleteExpense(id int) error {
+	return handler.service.DeleteExpense(id)
+}
