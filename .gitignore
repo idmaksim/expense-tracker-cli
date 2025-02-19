@@ -1,3 +1,7 @@
 .idea
 .vscode
 tracker-cli
+
+coverage.html
+coverage.out
+
